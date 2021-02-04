@@ -31,8 +31,59 @@ struct ProductModel: Identifiable {
 
 
 struct ContentView: View {
+    
+    let data: [ProductModel] = [
+        ProductModel(id: 1, namaProduk: "Polygon XTrada", fotoProduk: "foto1", hargaProduk: 20000000, lokasi: "Kab. Banyuwangi", ratingCount: 4, jumlahRating: 56),
+        
+        ProductModel(id: 2, namaProduk: "Polygon Heist", fotoProduk: "foto2", hargaProduk: 30000000, lokasi: "Kab. Bogor", ratingCount: 5, jumlahRating: 50),
+        
+        ProductModel(id: 3, namaProduk: "Polygon Monarch", fotoProduk: "foto3", hargaProduk: 50000000, lokasi: "Kab. Brebes", ratingCount: 4, jumlahRating: 56),
+        
+        ProductModel(id: 4, namaProduk: "United Detroit", fotoProduk: "foto4", hargaProduk: 90000000, lokasi: "Kab. Pekalongan", ratingCount: 3, jumlahRating: 56),
+        
+        ProductModel(id: 5, namaProduk: "United Miami", fotoProduk: "foto5", hargaProduk: 90000000, lokasi: "Kab. Pemalang", ratingCount: 4, jumlahRating: 56),
+        
+        ProductModel(id: 6, namaProduk: "   United Patrol", fotoProduk: "foto6", hargaProduk: 20000000, lokasi: "Kab. Banyumas", ratingCount: 4, jumlahRating: 56),
+        
+        ProductModel(id: 7, namaProduk: "Exotic M56", fotoProduk: "foto7", hargaProduk: 60000000, lokasi: "Kab. Banyumas", ratingCount: 5, jumlahRating: 50),
+        
+        ProductModel(id: 8, namaProduk: "Exotic J98", fotoProduk: "foto8", hargaProduk: 20000000, lokasi: "Kab. Bogor", ratingCount: 4, jumlahRating: 56),
+        
+        ProductModel(id: 9, namaProduk: "Genio XTrada", fotoProduk: "foto9", hargaProduk: 85000000, lokasi: "Jakarta", ratingCount: 2, jumlahRating: 86),
+        
+        ProductModel(id: 10, namaProduk: "Pacific", fotoProduk: "foto10", hargaProduk: 20000000, lokasi: "Kab. Sumedang", ratingCount: 4, jumlahRating: 56)
+        
+    ]
+    
+    
+    
+    
+    
     var body: some View {
-       Product()
+        NavigationView{
+            ScrollView{
+                ForEach(data){ row in
+                    VStack(spacing: 10){
+                        Product(data: row)
+                    }
+                    .padding()
+                }
+            }
+            .navigationBarTitle("Sepeda MTB")
+            .navigationBarItems(trailing:
+                                    HStack(spacing: 20){
+                                        Button(action: {print("")}){
+                                            Image(systemName: "person.fill")
+                                        }
+                                        
+                                        Button(action: {print("")}){
+                                            Image(systemName: "cart.fill")
+                                        }
+                                        
+                                    }
+            )
+        }
+        .accentColor(Color.secondary)
     }
 }
 
@@ -43,11 +94,14 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct Product: View {
+    
+    let data: ProductModel
+    
     var body: some View{
         VStack(alignment: .leading){
             //foto
             ZStack(alignment: .topTrailing){
-                Image("foto1")
+                Image(self.data.fotoProduk)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(height: 250)
@@ -60,13 +114,13 @@ struct Product: View {
                 }
             }
             
-            Text("Sepeda Polygon")
+            Text(self.data.namaProduk)
                 .font(.title)
                 .bold()
                 .padding(.leading)
                 .padding(.trailing)
             
-            Text("Rp. 2.000.000")
+            Text("Rp. \(self.data.hargaProduk)")
                 .font(.title)
                 .bold()
                 .foregroundColor(.red)
@@ -75,19 +129,21 @@ struct Product: View {
             
             HStack{
                 Image(systemName: "mappin.circle")
-                Text("Kab. Banyumas")
+                Text(self.data.lokasi)
             }
             .padding(.leading)
             .padding(.trailing)
             
             HStack{
                 HStack{
-                    Image(systemName: "star.fill")
-                        .foregroundColor(.yellow)
-                    Image(systemName: "star.fill")
-                        .foregroundColor(.yellow)
-                    Image(systemName: "star.fill")
-                        .foregroundColor(.yellow)
+                    ForEach(0..<self.data.ratingCount){
+                        items in
+                        Image(systemName: "star.fill")
+                            .foregroundColor(.yellow)
+                    }
+                    
+                    
+                
                         
                 }
             }
